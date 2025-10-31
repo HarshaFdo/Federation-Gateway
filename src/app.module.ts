@@ -14,6 +14,21 @@ import { IntrospectAndCompose } from '@apollo/gateway';
             { name: 'records', url: 'http://localhost:3001/graphql' },
           ],
         }),
+        debug: true,
+      },
+      server: {
+        plugins: [
+          {
+            async requestDidStart() {
+              console.log('\nGateway: Received query');
+              return {
+                async willSendResponse() {
+                  console.log('Gateway: Sending response\n');
+                },
+              };
+            },
+          },
+        ],
       },
     }),
   ],
