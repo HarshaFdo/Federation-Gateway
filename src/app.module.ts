@@ -19,11 +19,18 @@ import { IntrospectAndCompose } from '@apollo/gateway';
       server: {
         plugins: [
           {
-            async requestDidStart() {
-              console.log('\nGateway: Received query');
+            async requestDidStart(requestContext) {
+              const operationName =
+                requestContext.request.operationName || 'Anonymous';
+
+              console.log('Gateway: Received request');
+              console.log(`Operation: ${operationName}`);
+
               return {
                 async willSendResponse() {
-                  console.log('Gateway: Sending response\n');
+                  console.log(
+                    `Gateway: Sending response for operation ${operationName}`,
+                  );
                 },
               };
             },
