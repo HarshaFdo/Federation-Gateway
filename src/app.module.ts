@@ -24,7 +24,7 @@ import { IntrospectAndCompose } from '@apollo/gateway';
               const operationName =
                 requestContext.request.operationName || 'Anonymous';
 
-              logger.log('\nGateway: Received request');
+              logger.log('Gateway: Received request');
               logger.log(`Operation: ${operationName}`);
 
               return {
