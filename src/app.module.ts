@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import { IntrospectAndCompose } from '@apollo/gateway';
@@ -20,15 +20,16 @@ import { IntrospectAndCompose } from '@apollo/gateway';
         plugins: [
           {
             async requestDidStart(requestContext) {
+              const logger = new Logger('ApolloGateway');
               const operationName =
                 requestContext.request.operationName || 'Anonymous';
 
-              console.log('\nGateway: Received request');
-              console.log(`Operation: ${operationName}`);
+              logger.log('\nGateway: Received request');
+              logger.log(`Operation: ${operationName}`);
 
               return {
                 async willSendResponse() {
-                  console.log(
+                  logger.log(
                     `Gateway: Sending response for operation ${operationName}`,
                   );
                 },
