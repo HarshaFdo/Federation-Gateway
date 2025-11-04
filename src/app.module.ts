@@ -19,6 +19,7 @@ import { IntrospectAndCompose } from '@apollo/gateway';
       server: {
         plugins: [
           {
+            // run every time a new grapghQL request hit the gateway
             async requestDidStart(requestContext) {
               const logger = new Logger('ApolloGateway');
               const operationName =
@@ -28,6 +29,7 @@ import { IntrospectAndCompose } from '@apollo/gateway';
               logger.log(`Operation: ${operationName}`);
 
               return {
+                // Run right before the gateway sends the reponse back
                 async willSendResponse() {
                   logger.log(
                     `Gateway: Sending response for operation ${operationName}`,
